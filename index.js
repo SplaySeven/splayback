@@ -22,7 +22,7 @@ const server = new ApolloServer({
 			try {
 				//Verificamos el token del front end (cliente)
 				const usuarioActual = jwt.verify(token.replace('Bearer ', ''), process.env.SECRETA);
-				//	console.log(usuarioActual);
+
 				//agregamos el usuario actual al request
 				req.usuarioActual = usuarioActual;
 				return { usuarioActual };

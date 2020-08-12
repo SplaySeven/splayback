@@ -7,8 +7,8 @@ const resolvers = {
 				return null;
 			}
 			console.log(usuarioActual);
-			//Obtner el usuario Actual del request del jwt
-			const user = User.finOne({ id: usuarioActual.id });
+			//Obtner el usuario Actual del request del jwt veriticado
+			const user = User.finOne({ email: usuarioActual.email });
 			return user;
 		}
 	},
