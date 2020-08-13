@@ -49,7 +49,7 @@ async function authenticateUser(input) {
 	return {
 		token: crearToken(existeUsuario, process.env.SECRETA, '24h')
 	};
-
+	// se crea ka  funcion para guardar la foto en aws y el id en el base de datos
 	//async function updateAvatar(file) {
 	//	console.log(file);
 	//	}
