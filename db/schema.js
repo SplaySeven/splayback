@@ -21,6 +21,7 @@ const typeDefs = gql`
 		active: String
 		confirmed: String
 		created: String
+		type: String
 	}
 
 	type Token {
@@ -46,6 +47,7 @@ const typeDefs = gql`
 		city: String
 		latitude: Float
 		longitude: Float
+		type: String
 	}
 
 	input authenticateInput {
