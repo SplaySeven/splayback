@@ -2,20 +2,13 @@ const userController = require('../controlles/User');
 const User = require('../models/User');
 const resolvers = {
 	Query: {
-		obtenerUsuario: (_, args, { usuarioActual }) => {
-			if (!usuarioActual) {
-				return null;
-			}
-			console.log(usuarioActual);
-			//Obtner el usuario Actual del request del jwt veriticado
-			const user = User.finOne({ email: usuarioActual.email });
-			return user;
-		}
+		getUser: (_, { id, email }) => userController.getUser(id, email),
+		search: (_, { search }) => userController.search(search)
 	},
 	Mutation: {
 		newUser: async (_, { input }) => userController.newUser(input),
 		authenticateUser: async (_, { input }) => userController.authenticateUser(input),
-		updateAvatar: (_, { file }) => userController.updateAvatar(file)
+		updateAvatar: (_, { file }, ctx) => userController.updateAvatar(file, ctx)
 	}
 };
 
