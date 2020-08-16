@@ -25,6 +25,7 @@ const server = new ApolloServer({
 
 				//agregamos el usuario actual al request
 				req.usuarioActual = usuarioActual;
+
 				return { usuarioActual };
 			} catch (error) {
 				console.log('Hubo un error');
