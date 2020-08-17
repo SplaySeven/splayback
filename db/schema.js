@@ -33,6 +33,11 @@ const typeDefs = gql`
 		urlAvatar: String
 	}
 
+	type Publish {
+		status: Boolean
+		urlFile: String
+	}
+
 	input UserInput {
 		email: String!
 		phone: String
@@ -56,8 +61,12 @@ const typeDefs = gql`
 	}
 
 	type Query {
+		#User
 		getUser(id: ID, email: String): User
 		search(search: String): [User]
+		#Follow
+		isFollow(email: String!): Boolean
+		getFollowers(email: String!): [User]
 	}
 
 	type Mutation {
@@ -65,6 +74,11 @@ const typeDefs = gql`
 		newUser(input: UserInput): User
 		authenticateUser(input: authenticateInput): Token
 		updateAvatar(file: Upload): UpdateAvatar
+		#Follow
+		follow(email: String!): Boolean
+		unFollow(email: String!): Boolean
+		#Publication
+		publish(file: Upload): Publish
 	}
 `;
 
