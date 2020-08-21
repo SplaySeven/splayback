@@ -54,6 +54,10 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		trim: true
 	},
+	picture:{
+		type:String,
+		trim:true
+	},
 	active: {
 		type: String,
 		default: 'N'

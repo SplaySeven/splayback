@@ -73,6 +73,29 @@ async function updateAvatar(file, ctx) {
 		};
 	}
 }
+async function updatePicture(file,ctx){
+		const { id } = ctx.usuarioActual;
+
+	const { createReadStream, mimetype } = await file;
+	const extension = mimetype.split('/')[1];
+	const imageName = `portada/${id}.${extension}`;
+	const fileData = createReadStream();
+	try {
+		const result = await awsUploadImage(fileData, imageName);
+		console.log(result)
+		await User.findByIdAndUpdate(id, { picture: result });
+		return {
+			status: true,
+			urlPicture: result
+		};
+	} catch (error) {
+		return {
+			status: false,
+			urlPicture: null
+		};
+	}
+
+}
 async function getUser(id, email) {
 	let user = null;
 	if (id) user = await User.findById(id);
@@ -87,4 +110,4 @@ async function search(search) {
 	return users;
 }
 
-module.exports = { newUser, authenticateUser, updateAvatar, getUser, search };
+module.exports = { newUser, authenticateUser, updateAvatar, getUser, search,updatePicture };

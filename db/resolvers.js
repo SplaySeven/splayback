@@ -8,7 +8,7 @@ const resolvers = {
 		getUser: (_, { id, email }) => userController.getUser(id, email),
 		search: (_, { search }) => userController.search(search),
 		//Follow
-		isFollow: (_, { email }, ctx) => followController.isFollow(email, ctx),
+		isFollow: (_, { id }, ctx) => followController.isFollow(id, ctx),
 		getFollowers: (_, { email }) => followController.getFollowers(email)
 	},
 	Mutation: {
@@ -16,9 +16,10 @@ const resolvers = {
 		newUser: async (_, { input }) => userController.newUser(input),
 		authenticateUser: async (_, { input }) => userController.authenticateUser(input),
 		updateAvatar: (_, { file }, ctx) => userController.updateAvatar(file, ctx),
+		updatePicture:(_,{file},ctx)=> userController.updatePicture(file,ctx),
 		//Follow
-		follow: (_, { email }, ctx) => followController.follow(email, ctx),
-		unFollow: (_, { email }, ctx) => followController.unFollow(email, ctx),
+		follow: (_, { id }, ctx) => followController.follow(id, ctx),
+		unFollow: (_, { id }, ctx) => followController.unFollow(id, ctx),
 		//Publication
 		publish: (_, { file }, ctx) => publicationController.publish(file, ctx)
 	}
