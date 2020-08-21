@@ -73,6 +73,7 @@ async function updateAvatar(file, ctx) {
 		};
 	}
 }
+// Funcion que actualiza la foto de perfil
 async function updatePicture(file,ctx){
 		const { id } = ctx.usuarioActual;
 
