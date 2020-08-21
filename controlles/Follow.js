@@ -2,40 +2,49 @@
 const Follow = require('../models/Follow');
 const User = require('../models/User');
 
-async function follow(email, ctx) {
-	const userFound = await User.findOne({ email });
+async function follow(id, ctx) {
+	//Guardar el usuario logeao y al que sigo
+	
+const userFound = await User.findById(id);
 	if (!userFound) throw new Error('Usuario no encontrado');
-
 	try {
 		const follow = new Follow({
-			idUser: ctx.user.id,
+			idUser: ctx.usuarioActual.id,
 			follow: userFound._id
 		});
+		follow.save();
+		return true;
 	} catch (error) {
 		console.log(error);
 		return false;
 	}
 }
-async function isFollow(email, ctx) {
-	const userFound = await User.findOne({ email });
-	if (!userFound) throw new Error('Usuario no encontado');
-	const follow = await Follow.find({ idUser: ctx.id }).where('follow').equals(userFound._id);
+async function isFollow(id, ctx) {
+	//Saber si sigo a un usuario 
+	const userFound = await User.findById(id);
+		if (!userFound) throw new Error('Usuario no encontado');
+	const follow = await 
+	Follow.find({ idUser: ctx.usuarioActual.id })
+	.where('follow')
+	.equals(userFound._id);
 
 	if (follow.length > 0) {
 		return true;
 	}
 	return false;
 }
-async function unFollow(email, ctx) {
-	const userFound = await User.findOne({ email });
-	const follow = await Follow.deleteOne({ idUser: ctx.user.id }).where('follow').equals(userFound._id);
+async function unFollow(id, ctx) {
+	//Dejar de seguir a un usuario (borrar)
+	const userFound = await User.findById(id);
+	const follow = await Follow.deleteOne({ idUser: ctx.usuarioActual.id })
+	.where('follow').equals(userFound._id);
 	if (follow.deletedCount > 0) {
 		return true;
 	}
 	return false;
 }
-async function getFollowers(email) {
-	const user = await User.findOne({ email });
+async function getFollowers(id) {
+	const user = await User.findById(id);
 	const followers = await Follow.find({ follow: user._id }).populate('idUser');
 
 	const followersList = [];
