@@ -54,6 +54,10 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		trim: true
 	},
+	picture:{
+		type:String,
+		trim:true
+	},
 	active: {
 		type: String,
 		default: 'N'
@@ -65,6 +69,9 @@ const UserSchema = mongoose.Schema({
 	created: {
 		type: Date,
 		default: Date.now()
+	},
+	type: {
+		type: String
 	}
 });
 

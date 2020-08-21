@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const User = require('../models/User');
 require('dotenv').config({ path: 'variables.env' });
+const awsUploadImage = require('../utils/aws-upload-image');
 
 async function newUser(input) {
 	const newUser = input;
@@ -49,9 +50,64 @@ async function authenticateUser(input) {
 	return {
 		token: crearToken(existeUsuario, process.env.SECRETA, '24h')
 	};
-
-	//async function updateAvatar(file) {
-	//	console.log(file);
-	//	}
+	// se crea ka  funcion para guardar la foto en aws y el id en el base de datos
 }
-module.exports = { newUser, authenticateUser };
+async function updateAvatar(file, ctx) {
+	const { id } = ctx.usuarioActual;
+
+	const { createReadStream, mimetype } = await file;
+	const extension = mimetype.split('/')[1];
+	const imageName = `avatar/${id}.${extension}`;
+	const fileData = createReadStream();
+	try {
+		const result = await awsUploadImage(fileData, imageName);
+		await User.findByIdAndUpdate(id, { avatar: result });
+		return {
+			status: true,
+			urlAvatar: result
+		};
+	} catch (error) {
+		return {
+			status: false,
+			urlAvatar: null
+		};
+	}
+}
+async function updatePicture(file,ctx){
+		const { id } = ctx.usuarioActual;
+
+	const { createReadStream, mimetype } = await file;
+	const extension = mimetype.split('/')[1];
+	const imageName = `portada/${id}.${extension}`;
+	const fileData = createReadStream();
+	try {
+		const result = await awsUploadImage(fileData, imageName);
+		console.log(result)
+		await User.findByIdAndUpdate(id, { picture: result });
+		return {
+			status: true,
+			urlPicture: result
+		};
+	} catch (error) {
+		return {
+			status: false,
+			urlPicture: null
+		};
+	}
+
+}
+async function getUser(id, email) {
+	let user = null;
+	if (id) user = await User.findById(id);
+	if (email) user = await User.findOne({ email });
+	if (!user) throw new Error('El usuario no existe');
+	return user;
+}
+async function search(search) {
+	const users = await User.find({
+		name: { $regex: search, $options: 'i' }
+	});
+	return users;
+}
+
+module.exports = { newUser, authenticateUser, updateAvatar, getUser, search,updatePicture };
