@@ -36,6 +36,6 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app });
-app.listen({ port: 4000 }, () =>
+app.listen({ port: process.env.PORT || 4000 }, () =>
 	console.log(`El Servidor ApolloServer esta corriendo http://localhost:4000${server.graphqlPath} `)
 );
