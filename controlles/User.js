@@ -1,6 +1,7 @@
 const bcryptjs = require('bcryptjs');
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+//import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 require('dotenv').config({ path: 'variables.env' });
@@ -74,8 +75,8 @@ async function updateAvatar(file, ctx) {
 	}
 }
 // Funcion que actualiza la foto de perfil
-async function updatePicture(file,ctx){
-		const { id } = ctx.usuarioActual;
+async function updatePicture(file, ctx) {
+	const { id } = ctx.usuarioActual;
 
 	const { createReadStream, mimetype } = await file;
 	const extension = mimetype.split('/')[1];
@@ -83,7 +84,7 @@ async function updatePicture(file,ctx){
 	const fileData = createReadStream();
 	try {
 		const result = await awsUploadImage(fileData, imageName);
-		console.log(result)
+		console.log(result);
 		await User.findByIdAndUpdate(id, { picture: result });
 		return {
 			status: true,
@@ -95,7 +96,6 @@ async function updatePicture(file,ctx){
 			urlPicture: null
 		};
 	}
-
 }
 async function getUser(id, email) {
 	let user = null;
@@ -111,4 +111,4 @@ async function search(search) {
 	return users;
 }
 
-module.exports = { newUser, authenticateUser, updateAvatar, getUser, search,updatePicture };
+module.exports = { newUser, authenticateUser, updateAvatar, getUser, search, updatePicture };

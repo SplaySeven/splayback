@@ -1,18 +1,14 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-
-require('dotenv').config({ path: '.env' });
-//graphql
-import { ApolloServer } from 'apollo-server-express';
+const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./db/schema');
 const resolvers = require('./db/resolvers');
 const conectarDB = require('./config/db');
+const jwt = require('jsonwebtoken');
+require('dotenv').config({ path: '.env' });
 
 //Conectar a la base de datos;
 
 conectarDB();
 
-const app = express();
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
@@ -35,7 +31,6 @@ const server = new ApolloServer({
 	}
 });
 
-server.applyMiddleware({ app });
-app.listen({ port: process.env.PORT || 4000 }, () =>
-	console.log(`El Servidor ApolloServer esta corriendo http://localhost:4000${server.graphqlPath} `)
-);
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+	console.log(`El Servidor ApolloServer esta corriendo ${url}`);
+});
