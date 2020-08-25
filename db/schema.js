@@ -18,7 +18,7 @@ const typeDefs = gql`
 		latitude: Float
 		longitude: Float
 		avatar: String
-		picture:String
+		picture: String
 		active: String
 		confirmed: String
 		created: String
@@ -33,10 +33,12 @@ const typeDefs = gql`
 		status: Boolean
 		urlAvatar: String
 	}
-type UpdatePicture {
+
+	type UpdatePicture {
 		status: Boolean
 		urlPicture: String
 	}
+
 	type Publish {
 		status: Boolean
 		urlFile: String
@@ -78,7 +80,9 @@ type UpdatePicture {
 		newUser(input: UserInput): User
 		authenticateUser(input: authenticateInput): Token
 		updateAvatar(file: Upload): UpdateAvatar
-		updatePicture(file:Upload):UpdatePicture
+		deleteAvatar: Boolean
+		updatePicture(file: Upload): UpdatePicture
+		deletePicture: Boolean
 		#Follow
 		follow(id: ID!): Boolean
 		unFollow(id: ID!): Boolean

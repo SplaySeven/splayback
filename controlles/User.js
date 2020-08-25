@@ -74,8 +74,8 @@ async function updateAvatar(file, ctx) {
 	}
 }
 // Funcion que actualiza la foto de perfil
-async function updatePicture(file,ctx){
-		const { id } = ctx.usuarioActual;
+async function updatePicture(file, ctx) {
+	const { id } = ctx.usuarioActual;
 
 	const { createReadStream, mimetype } = await file;
 	const extension = mimetype.split('/')[1];
@@ -83,7 +83,7 @@ async function updatePicture(file,ctx){
 	const fileData = createReadStream();
 	try {
 		const result = await awsUploadImage(fileData, imageName);
-		console.log(result)
+		console.log(result);
 		await User.findByIdAndUpdate(id, { picture: result });
 		return {
 			status: true,
@@ -95,7 +95,6 @@ async function updatePicture(file,ctx){
 			urlPicture: null
 		};
 	}
-
 }
 async function getUser(id, email) {
 	let user = null;
@@ -110,5 +109,34 @@ async function search(search) {
 	});
 	return users;
 }
+async function deleteAvatar(ctx) {
+	const { id } = ctx.usuarioActual;
+	try {
+		await User.findByIdAndUpdate(id, { avatar: '' });
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function deletePicture(ctx) {
+	const { id } = ctx.usuarioActual;
+	try {
+		await User.findByIdAndUpdate(id, { picture: '' });
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
 
-module.exports = { newUser, authenticateUser, updateAvatar, getUser, search,updatePicture };
+module.exports = {
+	newUser,
+	authenticateUser,
+	updateAvatar,
+	getUser,
+	search,
+	updatePicture,
+	deleteAvatar,
+	deletePicture
+};

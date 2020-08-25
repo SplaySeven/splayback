@@ -16,7 +16,9 @@ const resolvers = {
 		newUser: async (_, { input }) => userController.newUser(input),
 		authenticateUser: async (_, { input }) => userController.authenticateUser(input),
 		updateAvatar: (_, { file }, ctx) => userController.updateAvatar(file, ctx),
-		updatePicture:(_,{file},ctx)=> userController.updatePicture(file,ctx),
+		deleteAvatar: (_, {}, ctx) => userController.deleteAvatar(ctx),
+		updatePicture: (_, { file }, ctx) => userController.updatePicture(file, ctx),
+		deletePicture: (_, {}, ctx) => userController.deletePicture(ctx),
 		//Follow
 		follow: (_, { id }, ctx) => followController.follow(id, ctx),
 		unFollow: (_, { id }, ctx) => followController.unFollow(id, ctx),
