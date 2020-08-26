@@ -1,5 +1,6 @@
 const userController = require('../controlles/User');
 const followController = require('../controlles/Follow');
+const friendController = require('../controlles/Friend');
 const publicationController = require('../controlles/Publication');
 
 const resolvers = {
@@ -9,7 +10,10 @@ const resolvers = {
 		search: (_, { search }) => userController.search(search),
 		//Follow
 		isFollow: (_, { id }, ctx) => followController.isFollow(id, ctx),
-		getFollowers: (_, { email }) => followController.getFollowers(email)
+		getFollowers: (_, { id }) => followController.getFollowers(id),
+		//friend
+		isFriend: (_, { id }, ctx) => friendController.isFriend(id, ctx),
+		getFriends: (_, { id }) => friendController.getFriends(id)
 	},
 	Mutation: {
 		//User
@@ -22,6 +26,9 @@ const resolvers = {
 		//Follow
 		follow: (_, { id }, ctx) => followController.follow(id, ctx),
 		unFollow: (_, { id }, ctx) => followController.unFollow(id, ctx),
+		//Friend
+		friend: (_, { id }, ctx) => friendController.friend(id, ctx),
+		unFriend: (_, { id }, ctx) => friendController.unFriend(id, ctx),
 		//Publication
 		publish: (_, { file }, ctx) => publicationController.publish(file, ctx)
 	}

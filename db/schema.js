@@ -73,6 +73,9 @@ const typeDefs = gql`
 		#Follow
 		isFollow(id: ID!): Boolean
 		getFollowers(id: ID!): [User]
+		#Friend
+		isFriend(id: ID!): Boolean
+		getFriends(id: ID!): [User]
 	}
 
 	type Mutation {
@@ -86,6 +89,9 @@ const typeDefs = gql`
 		#Follow
 		follow(id: ID!): Boolean
 		unFollow(id: ID!): Boolean
+		#Friend
+		friend(id: ID!): Boolean
+		unFriend(id: ID!): Boolean
 		#Publication
 		publish(file: Upload): Publish
 	}
