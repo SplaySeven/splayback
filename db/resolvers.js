@@ -13,7 +13,9 @@ const resolvers = {
 		getFollowers: (_, { id }) => followController.getFollowers(id),
 		//friend
 		isFriend: (_, { id }, ctx) => friendController.isFriend(id, ctx),
-		getFriends: (_, { id }) => friendController.getFriends(id)
+		getFriends: (_, { id }) => friendController.getFriends(id),
+		//Publication
+		getPublications: (_, { id }) => publicationController.getPublications(id)
 	},
 	Mutation: {
 		//User

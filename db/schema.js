@@ -44,6 +44,14 @@ const typeDefs = gql`
 		urlFile: String
 	}
 
+	type Publication {
+		id: ID
+		idUser: ID
+		file: String
+		typeFile: String
+		createAt: String
+	}
+
 	input UserInput {
 		email: String!
 		phone: String
@@ -76,6 +84,8 @@ const typeDefs = gql`
 		#Friend
 		isFriend(id: ID!): Boolean
 		getFriends(id: ID!): [User]
+		#Publication
+		getPublications(id: ID!): [Publication]
 	}
 
 	type Mutation {
