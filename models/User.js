@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
 	email: {
@@ -54,9 +54,9 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		trim: true
 	},
-	picture:{
-		type:String,
-		trim:true
+	picture: {
+		type: String,
+		trim: true
 	},
 	active: {
 		type: String,
