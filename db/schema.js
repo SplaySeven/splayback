@@ -52,6 +52,13 @@ const typeDefs = gql`
 		createAt: String
 	}
 
+	type Comment {
+		idPublication: ID
+		idUser: User
+		comment: String
+		createAt: String
+	}
+
 	input UserInput {
 		email: String!
 		phone: String
@@ -74,6 +81,11 @@ const typeDefs = gql`
 		password: String!
 	}
 
+	input commentInput {
+		idPublication: ID
+		comment: String
+	}
+
 	type Query {
 		#User
 		getUser(id: ID, email: String): User
@@ -86,6 +98,8 @@ const typeDefs = gql`
 		getFriends(id: ID!): [User]
 		#Publication
 		getPublications(id: ID!): [Publication]
+		#Comment
+		getComments(idPublication: ID!): [Comment]
 	}
 
 	type Mutation {
@@ -104,6 +118,8 @@ const typeDefs = gql`
 		unFriend(id: ID!): Boolean
 		#Publication
 		publish(file: Upload): Publish
+		#Comment
+		addComment(input: commentInput): Comment
 	}
 `;
 
