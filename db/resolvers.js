@@ -2,7 +2,7 @@ const userController = require('../controlles/User');
 const followController = require('../controlles/Follow');
 const friendController = require('../controlles/Friend');
 const publicationController = require('../controlles/Publication');
-
+const commentController = require('../controlles/Comment');
 const resolvers = {
 	Query: {
 		//User
@@ -15,7 +15,9 @@ const resolvers = {
 		isFriend: (_, { id }, ctx) => friendController.isFriend(id, ctx),
 		getFriends: (_, { id }) => friendController.getFriends(id),
 		//Publication
-		getPublications: (_, { id }) => publicationController.getPublications(id)
+		getPublications: (_, { id }) => publicationController.getPublications(id),
+		//Comment
+		getComments: (_, { idPublication }) => commentController.getComments(idPublication)
 	},
 	Mutation: {
 		//User
@@ -32,7 +34,9 @@ const resolvers = {
 		friend: (_, { id }, ctx) => friendController.friend(id, ctx),
 		unFriend: (_, { id }, ctx) => friendController.unFriend(id, ctx),
 		//Publication
-		publish: (_, { file }, ctx) => publicationController.publish(file, ctx)
+		publish: (_, { file }, ctx) => publicationController.publish(file, ctx),
+		//Commnet
+		addComment: (_, { input }, ctx) => commentController.addComment(input, ctx)
 	}
 };
 
