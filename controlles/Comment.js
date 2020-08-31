@@ -19,7 +19,17 @@ async function getComments(idPublication) {
 	return result;
 }
 
+async function countComments(idPublication) {
+	try {
+		const result = await Comment.countDocuments({ idPublication });
+		return result;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	addComment,
-	getComments
+	getComments,
+	countComments
 };
