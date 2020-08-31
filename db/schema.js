@@ -46,7 +46,7 @@ const typeDefs = gql`
 
 	type Publication {
 		id: ID
-		idUser: ID
+		idUser: String
 		file: String
 		typeFile: String
 		createAt: String
@@ -100,6 +100,10 @@ const typeDefs = gql`
 		getPublications(id: ID!): [Publication]
 		#Comment
 		getComments(idPublication: ID!): [Comment]
+		countComments(idPublication: ID!): Int
+		#Like
+		isLike(idPublication: ID!): Boolean
+		countLikes(idPublication: ID!): Int
 	}
 
 	type Mutation {
@@ -120,6 +124,9 @@ const typeDefs = gql`
 		publish(file: Upload): Publish
 		#Comment
 		addComment(input: commentInput): Comment
+		#Like
+		addLike(idPublication: ID!): Boolean
+		deleteLike(idPublication: ID!): Boolean
 	}
 `;
 
