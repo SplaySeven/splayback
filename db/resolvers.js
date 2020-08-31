@@ -3,6 +3,7 @@ const followController = require('../controlles/Follow');
 const friendController = require('../controlles/Friend');
 const publicationController = require('../controlles/Publication');
 const commentController = require('../controlles/Comment');
+const likeController = require('../controlles/Like');
 const resolvers = {
 	Query: {
 		//User
@@ -17,7 +18,11 @@ const resolvers = {
 		//Publication
 		getPublications: (_, { id }) => publicationController.getPublications(id),
 		//Comment
-		getComments: (_, { idPublication }) => commentController.getComments(idPublication)
+		getComments: (_, { idPublication }) => commentController.getComments(idPublication),
+		countComments: (_, { idPublication }) => commentController.countComments(idPublication),
+		//Like
+		isLike: (_, { idPublication }, ctx) => likeController.isLike(idPublication, ctx),
+		countLikes: (_, { idPublication }) => likeController.countLikes(idPublication)
 	},
 	Mutation: {
 		//User
@@ -36,7 +41,10 @@ const resolvers = {
 		//Publication
 		publish: (_, { file }, ctx) => publicationController.publish(file, ctx),
 		//Commnet
-		addComment: (_, { input }, ctx) => commentController.addComment(input, ctx)
+		addComment: (_, { input }, ctx) => commentController.addComment(input, ctx),
+		//Like
+		addLike: (_, { idPublication }, ctx) => likeController.addLike(idPublication, ctx),
+		deleteLike: (_, { idPublication }, ctx) => likeController.deleteLike(idPublication, ctx)
 	}
 };
 
