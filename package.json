@@ -4,8 +4,8 @@
 	"description": "GraphQl Servidor",
 	"main": "index.js",
 	"scripts": {
-		"dev": "nodemon ./index.js --exec babel-node e-js",
-		"start": "node ./index.js --exec babel-node e-js "
+		"dev": "nodemon ./index.js ",
+		"start": "node ./index.js  "
 	},
 	"author": "Carlos Roberto Velasquez",
 	"license": "ISC",
@@ -27,8 +27,7 @@
 		"uuid": "^8.3.0"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
+		"babel-cli": "^1.7.0",
 		"babel-preset-stage-0": "^6.24.1"
 	}
 }

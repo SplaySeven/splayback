@@ -59,6 +59,14 @@ const typeDefs = gql`
 		createAt: String
 	}
 
+	type FeedFriendPublication {
+		id: ID
+		idUser: User
+		file: String
+		typeFile: String
+		createAt: String
+	}
+
 	input UserInput {
 		email: String!
 		phone: String
@@ -98,6 +106,7 @@ const typeDefs = gql`
 		getFriends(id: ID!): [User]
 		#Publication
 		getPublications(id: ID!): [Publication]
+		getPublicationsFollersFriends: [FeedFriendPublication]
 		#Comment
 		getComments(idPublication: ID!): [Comment]
 		countComments(idPublication: ID!): Int
