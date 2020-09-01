@@ -1,4 +1,6 @@
 const Publication = require('../models/Publication');
+const Follow = require('../models/Follow');
+const Friend = require('../models/Friend');
 const awsUploadImage = require('../utils/aws-upload-image');
 const { v4: uuidv4 } = require('uuid');
 async function publish(file, ctx) {
@@ -35,8 +37,45 @@ async function getPublications(id) {
 	const publications = await Publication.find().where({ idUser: id }).sort({ createAt: -1 });
 	return publications;
 }
+async function getPublicationsFollersFriends(ctx) {
+	const followeds = await Follow.find({ idUser: ctx.usuarioActual.id }).populate('follow');
+	const friends = await Friend.find({ idUser: ctx.usuarioActual.id }).populate('friend');
+
+	const followedsList = [];
+	for await (const data of followeds) {
+		followedsList.push(data.follow);
+	}
+
+	const friendsList = [];
+	for await (const data of friends) {
+		friendsList.push(data.friend);
+	}
+
+	const publicationsList = [];
+	for await (const data of followedsList) {
+		const publications = await Publication.find()
+			.where({ idUser: data._id })
+			.sort({ createAt: -1 })
+			.populate('idUser');
+		publicationsList.push(...publications);
+	}
+	//const publicationsList2 = [];
+	for await (const data of friendsList) {
+		const publications2 = await Publication.find()
+			.where({ idUser: data._id })
+			.sort({ createAt: -1 })
+			.populate('idUser')
+			.limit(10);
+		publicationsList.push(...publications2);
+	}
+	const result = publicationsList.sort((a, b) => {
+		return new Date(b.createAt) - new Date(a.createAt);
+	});
+	return result;
+}
 
 module.exports = {
 	publish,
-	getPublications
+	getPublications,
+	getPublicationsFollersFriends
 };
