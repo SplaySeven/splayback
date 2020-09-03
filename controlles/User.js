@@ -2,7 +2,7 @@ const bcryptjs = require('bcryptjs');
 //import bcrypt from 'bcrypt';
 //import jwt from 'jsonwebtoken';
 const jwt = require('jsonwebtoken');
-
+const { v4: uuidv4 } = require('uuid');
 const User = require('../models/User');
 require('dotenv').config({ path: 'variables.env' });
 const awsUploadImage = require('../utils/aws-upload-image');
@@ -55,13 +55,13 @@ async function authenticateUser(input) {
 }
 async function updateAvatar(file, ctx) {
 	const { id } = ctx.usuarioActual;
-
 	const { createReadStream, mimetype } = await file;
 	const extension = mimetype.split('/')[1];
-	const imageName = `avatar/${id}.${extension}`;
+	const imageName = `avatar/${uuidv4()}.${extension}`;
 	const fileData = createReadStream();
 	try {
 		const result = await awsUploadImage(fileData, imageName);
+
 		await User.findByIdAndUpdate(id, { avatar: result });
 		return {
 			status: true,
@@ -80,11 +80,10 @@ async function updatePicture(file, ctx) {
 
 	const { createReadStream, mimetype } = await file;
 	const extension = mimetype.split('/')[1];
-	const imageName = `portada/${id}.${extension}`;
+	const imageName = `portada/${uuidv4()}.${extension}`;
 	const fileData = createReadStream();
 	try {
 		const result = await awsUploadImage(fileData, imageName);
-		console.log(result);
 		await User.findByIdAndUpdate(id, { picture: result });
 		return {
 			status: true,
