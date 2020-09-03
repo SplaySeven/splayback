@@ -68,6 +68,16 @@ async function getPublicationsFollersFriends(ctx) {
 			.limit(10);
 		publicationsList.push(...publications2);
 	}
+
+	// Mis Publicaciones
+	const Mypublications = await Publication.find()
+		.where({ idUser: ctx.usuarioActual.id })
+		.sort({ createAt: -1 })
+		.populate('idUser')
+		.limit(5);
+
+	publicationsList.push(...Mypublications);
+
 	const result = publicationsList.sort((a, b) => {
 		return new Date(b.createAt) - new Date(a.createAt);
 	});
