@@ -40,7 +40,6 @@ async function getPublications(id) {
 async function getPublicationsFollersFriends(ctx) {
 	const followeds = await Follow.find({ idUser: ctx.usuarioActual.id }).populate('follow');
 	const friends = await Friend.find({ idUser: ctx.usuarioActual.id }).populate('friend');
-
 	const followedsList = [];
 	for await (const data of followeds) {
 		followedsList.push(data.follow);
