@@ -48,9 +48,24 @@ async function getFriends(id) {
 	return friendsList;
 }
 
+async function getNotFriends(ctx) {
+	const users = await User.find().where({ type: 'P' }).limit(10);
+	const arrayUsers = [];
+	for await (const user of users) {
+		const isFind = await Friend.findOne({ idUser: ctx.usuarioActual.id }).where('friend').equals(user._id);
+		if (!isFind) {
+			if (user._id.toString() !== ctx.usuarioActual.id.toString()) {
+				arrayUsers.push(user);
+			}
+		}
+	}
+	return arrayUsers;
+}
+
 module.exports = {
 	friend,
 	isFriend,
 	unFriend,
-	getFriends
+	getFriends,
+	getNotFriends
 };
