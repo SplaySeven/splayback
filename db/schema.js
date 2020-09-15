@@ -23,6 +23,7 @@ const typeDefs = gql`
 		confirmed: String
 		created: String
 		type: String
+		uidFirebase: String
 	}
 
 	type Token {
@@ -68,7 +69,7 @@ const typeDefs = gql`
 	}
 
 	input UserInput {
-		email: String!
+		email: String
 		phone: String
 		password: String!
 		name: String!
@@ -82,10 +83,11 @@ const typeDefs = gql`
 		latitude: Float
 		longitude: Float
 		type: String
+		uidFirebase: String
 	}
 
 	input authenticateInput {
-		email: String!
+		uidFirebase: String!
 		password: String!
 	}
 
@@ -96,8 +98,9 @@ const typeDefs = gql`
 
 	type Query {
 		#User
-		getUser(id: ID, email: String): User
+		getUser(id: ID, email: String, uidFirebase: String): User
 		search(search: String): [User]
+		isUserFirebase(uidFirebase: String!): Boolean
 		#Follow
 		isFollow(id: ID!): Boolean
 		getFollowers(id: ID!): [User]

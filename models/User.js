@@ -4,8 +4,7 @@ const UserSchema = mongoose.Schema({
 	email: {
 		type: String,
 		required: true,
-		trim: true,
-		unique: true
+		trim: true
 	},
 	phone: {
 		type: String,
@@ -23,20 +22,24 @@ const UserSchema = mongoose.Schema({
 	},
 	lastname: {
 		type: String,
-		trim: true
+		trim: true,
+		default: 'ND'
 	},
 	gender: {
 		type: String,
 		trim: true
 	},
 	birthdayDay: {
-		type: String
+		type: String,
+		default: '01'
 	},
 	birthdayMonth: {
-		type: String
+		type: String,
+		default: '01'
 	},
 	birthdayYear: {
-		type: String
+		type: String,
+		default: '1800'
 	},
 	country: {
 		type: String
@@ -72,6 +75,10 @@ const UserSchema = mongoose.Schema({
 	},
 	type: {
 		type: String
+	},
+	uidFirebase: {
+		type: String,
+		required: true
 	}
 });
 
