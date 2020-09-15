@@ -7,8 +7,9 @@ const likeController = require('../controlles/Like');
 const resolvers = {
 	Query: {
 		//User
-		getUser: (_, { id, email }) => userController.getUser(id, email),
+		getUser: (_, { id, email, uidFirebase }) => userController.getUser(id, email, uidFirebase),
 		search: (_, { search }) => userController.search(search),
+		isUserFirebase: (_, { uidFirebase }) => userController.isUserFirebase(uidFirebase),
 		//Follow
 		isFollow: (_, { id }, ctx) => followController.isFollow(id, ctx),
 		getFollowers: (_, { id }) => followController.getFollowers(id),

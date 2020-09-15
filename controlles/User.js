@@ -7,16 +7,27 @@ const User = require('../models/User');
 require('dotenv').config({ path: 'variables.env' });
 const awsUploadImage = require('../utils/aws-upload-image');
 
+async function isUserFirebase(uidFirebase) {
+	//Saber si ya fue ingresado desde firebase
+	const userFound = await User.findOne({ uidFirebase });
+	if (!userFound) {
+		return false;
+	}
+	return true;
+}
+
 async function newUser(input) {
 	const newUser = input;
 	newUser.email = newUser.email.toLowerCase();
 
 	const { email, password } = newUser;
 	//Revisar si el Correo ya existe en la base de datos
+	/*
 	const existeEmail = await User.findOne({ email });
 	if (existeEmail) {
 		throw new Error('El Correo ya esta registrado');
 	}
+*/
 	//Encriptar su password
 	const salt = await bcryptjs.genSaltSync(10);
 	newUser.password = await bcryptjs.hash(password, salt);
@@ -37,8 +48,8 @@ const crearToken = (user, secreta, expiresIn) => {
 
 async function authenticateUser(input) {
 	//Si el usuario existe
-	const { email, password } = input;
-	const existeUsuario = await User.findOne({ email: email.toLowerCase() });
+	const { uidFirebase, password } = input;
+	const existeUsuario = await User.findOne({ uidFirebase });
 	if (!existeUsuario) {
 		throw new Error('El Usuario no existe');
 	}
@@ -47,6 +58,7 @@ async function authenticateUser(input) {
 	if (!passwordCorrecto) {
 		throw new Error('El Password es Incorrecto');
 	}
+
 	//Crear el token
 	return {
 		token: crearToken(existeUsuario, process.env.SECRETA, '24h')
@@ -96,10 +108,11 @@ async function updatePicture(file, ctx) {
 		};
 	}
 }
-async function getUser(id, email) {
+async function getUser(id, email, uidFirebase) {
 	let user = null;
 	if (id) user = await User.findById(id);
 	if (email) user = await User.findOne({ email });
+	if (uidFirebase) user = await User.findOne({ uidFirebase });
 	if (!user) throw new Error('El usuario no existe');
 	return user;
 }
@@ -138,5 +151,6 @@ module.exports = {
 	search,
 	updatePicture,
 	deleteAvatar,
-	deletePicture
+	deletePicture,
+	isUserFirebase
 };
