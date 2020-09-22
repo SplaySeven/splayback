@@ -10,6 +10,7 @@ const resolvers = {
 		getUser: (_, { id, email, uidFirebase }) => userController.getUser(id, email, uidFirebase),
 		search: (_, { search }) => userController.search(search),
 		isUserFirebase: (_, { uidFirebase }) => userController.isUserFirebase(uidFirebase),
+		getUserConnect: (_, { connected }) => userController.getUserConnect(connected),
 		//Follow
 		isFollow: (_, { id }, ctx) => followController.isFollow(id, ctx),
 		getFollowers: (_, { id }) => followController.getFollowers(id),
@@ -31,6 +32,7 @@ const resolvers = {
 		//User
 		newUser: async (_, { input }) => userController.newUser(input),
 		authenticateUser: async (_, { input }) => userController.authenticateUser(input),
+		connectedUser: async (_, { connected }, ctx) => userController.connectedUser(connected, ctx),
 		updateAvatar: (_, { file }, ctx) => userController.updateAvatar(file, ctx),
 		deleteAvatar: (_, {}, ctx) => userController.deleteAvatar(ctx),
 		updatePicture: (_, { file }, ctx) => userController.updatePicture(file, ctx),

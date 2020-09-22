@@ -24,6 +24,7 @@ const typeDefs = gql`
 		created: String
 		type: String
 		uidFirebase: String
+		connected: String
 	}
 
 	type Token {
@@ -84,6 +85,7 @@ const typeDefs = gql`
 		longitude: Float
 		type: String
 		uidFirebase: String
+		connected: String
 	}
 
 	input authenticateInput {
@@ -99,6 +101,7 @@ const typeDefs = gql`
 	type Query {
 		#User
 		getUser(id: ID, email: String, uidFirebase: String): User
+		getUserConnect(connected: String): [User]
 		search(search: String): [User]
 		isUserFirebase(uidFirebase: String!): Boolean
 		#Follow
@@ -123,6 +126,7 @@ const typeDefs = gql`
 		#User
 		newUser(input: UserInput): User
 		authenticateUser(input: authenticateInput): Token
+		connectedUser(connected: String): Boolean
 		updateAvatar(file: Upload): UpdateAvatar
 		deleteAvatar: Boolean
 		updatePicture(file: Upload): UpdatePicture

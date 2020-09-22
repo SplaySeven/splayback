@@ -65,6 +65,19 @@ async function authenticateUser(input) {
 	};
 	// se crea ka  funcion para guardar la foto en aws y el id en el base de datos
 }
+async function connectedUser(connected, ctx) {
+	const { id } = ctx.usuarioActual;
+	try {
+		await User.findByIdAndUpdate(id, { connected: connected });
+		return true;
+	} catch (error) {
+		return false;
+	}
+}
+async function getUserConnect(connected) {
+	const users = await User.find({ connected });
+	return users;
+}
 async function updateAvatar(file, ctx) {
 	const { id } = ctx.usuarioActual;
 	const { createReadStream, mimetype } = await file;
@@ -152,5 +165,7 @@ module.exports = {
 	updatePicture,
 	deleteAvatar,
 	deletePicture,
-	isUserFirebase
+	isUserFirebase,
+	connectedUser,
+	getUserConnect
 };
