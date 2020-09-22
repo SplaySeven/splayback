@@ -79,6 +79,10 @@ const UserSchema = mongoose.Schema({
 	uidFirebase: {
 		type: String,
 		required: true
+	},
+	connected: {
+		type: String,
+		default: 'N'
 	}
 });
 
