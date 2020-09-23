@@ -3,7 +3,10 @@ const Follow = require('../models/Follow');
 const Friend = require('../models/Friend');
 const awsUploadImage = require('../utils/aws-upload-image');
 const { v4: uuidv4 } = require('uuid');
-async function publish(file, ctx) {
+async function publish(file, comments, ctx) {
+	console.log(file);
+	console.log(comments);
+	console.log(ctx);
 	const { id } = ctx.usuarioActual;
 	const { createReadStream, mimetype } = await file;
 	const extension = mimetype.split('/')[1];
@@ -17,7 +20,8 @@ async function publish(file, ctx) {
 			idUser: id,
 			file: result,
 			typeFile: mimetype.split('/')[0],
-			createAt: Date.now()
+			createAt: Date.now(),
+			comments: comments
 		});
 		publication.save();
 		return {
