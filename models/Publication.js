@@ -19,6 +19,9 @@ const PublicactionSchema = Schema({
 	createAt: {
 		type: Date,
 		default: Date.now()
+	},
+	comments: {
+		type: String
 	}
 });
 module.exports = mongoose.model('Publication', PublicactionSchema);
