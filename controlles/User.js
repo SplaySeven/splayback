@@ -1,8 +1,14 @@
 const bcryptjs = require('bcryptjs');
 //import bcrypt from 'bcrypt';
+<<<<<<< HEAD
 //import jwt from 'jsonwebtoken';
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
+=======
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+>>>>>>> 564b7c3bc72e2b6e9b8d361f1e722fef8eab1153
 const User = require('../models/User');
 require('dotenv').config({ path: 'variables.env' });
 const awsUploadImage = require('../utils/aws-upload-image');
@@ -109,6 +115,10 @@ async function updatePicture(file, ctx) {
 	const fileData = createReadStream();
 	try {
 		const result = await awsUploadImage(fileData, imageName);
+<<<<<<< HEAD
+=======
+		console.log(result);
+>>>>>>> 564b7c3bc72e2b6e9b8d361f1e722fef8eab1153
 		await User.findByIdAndUpdate(id, { picture: result });
 		return {
 			status: true,
@@ -156,6 +166,7 @@ async function deletePicture(ctx) {
 	}
 }
 
+<<<<<<< HEAD
 module.exports = {
 	newUser,
 	authenticateUser,
@@ -169,3 +180,6 @@ module.exports = {
 	connectedUser,
 	getUserConnect
 };
+=======
+module.exports = { newUser, authenticateUser, updateAvatar, getUser, search, updatePicture };
+>>>>>>> 564b7c3bc72e2b6e9b8d361f1e722fef8eab1153

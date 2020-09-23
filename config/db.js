@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+//import mongoose from 'mongoose';
+>>>>>>> 564b7c3bc72e2b6e9b8d361f1e722fef8eab1153
 const mongoose = require('mongoose');
 
 require('dotenv').config({ path: '.env' });
