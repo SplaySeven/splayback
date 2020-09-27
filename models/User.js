@@ -83,6 +83,9 @@ const UserSchema = mongoose.Schema({
 	connected: {
 		type: String,
 		default: 'N'
+	},
+	dateConnect: {
+		type: Date
 	}
 });
 

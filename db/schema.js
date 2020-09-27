@@ -53,6 +53,7 @@ const typeDefs = gql`
 		typeFile: String
 		createAt: String
 		comments: String
+		state: String
 	}
 
 	type Comment {
@@ -141,6 +142,7 @@ const typeDefs = gql`
 		unFriend(id: ID!): Boolean
 		#Publication
 		publish(file: Upload, comments: String): Publish
+		deletePublish(id: ID!): Boolean
 		#Comment
 		addComment(input: commentInput): Comment
 		#Like
