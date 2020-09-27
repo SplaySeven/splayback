@@ -22,6 +22,10 @@ const PublicactionSchema = Schema({
 	},
 	comments: {
 		type: String
+	},
+	state: {
+		type: String,
+		default: 'S'
 	}
 });
 module.exports = mongoose.model('Publication', PublicactionSchema);

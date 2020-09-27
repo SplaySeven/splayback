@@ -45,6 +45,7 @@ const resolvers = {
 		unFriend: (_, { id }, ctx) => friendController.unFriend(id, ctx),
 		//Publication
 		publish: (_, { file, comments }, ctx) => publicationController.publish(file, comments, ctx),
+		deletePublish: (_, { id }, ctx) => publicationController.deletePublish(id, ctx),
 		//Commnet
 		addComment: (_, { input }, ctx) => commentController.addComment(input, ctx),
 		//Like

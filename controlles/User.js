@@ -67,7 +67,7 @@ async function authenticateUser(input) {
 
 	//Crear el token
 	return {
-		token: crearToken(existeUsuario, process.env.SECRETA, '24h')
+		token: crearToken(existeUsuario, process.env.SECRETA, '7d')
 	};
 	// se crea ka  funcion para guardar la foto en aws y el id en el base de datos
 }
