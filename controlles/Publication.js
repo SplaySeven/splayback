@@ -4,9 +4,6 @@ const Friend = require('../models/Friend');
 const awsUploadImage = require('../utils/aws-upload-image');
 const { v4: uuidv4 } = require('uuid');
 async function publish(file, comments, ctx) {
-	console.log(file);
-	console.log(comments);
-	console.log(ctx);
 	const { id } = ctx.usuarioActual;
 	const { createReadStream, mimetype } = await file;
 	const extension = mimetype.split('/')[1];
@@ -38,7 +35,8 @@ async function publish(file, comments, ctx) {
 
 async function getPublications(id) {
 	if (!id) throw new Error('Usuario no encontrado');
-	const publications = await Publication.find().where({ idUser: id }).sort({ createAt: -1 });
+	const publications = await Publication.find().where({ idUser: id }).where({ state: 'S' }).sort({ createAt: -1 });
+
 	return publications;
 }
 async function getPublicationsFollersFriends(ctx) {
@@ -58,17 +56,20 @@ async function getPublicationsFollersFriends(ctx) {
 	for await (const data of followedsList) {
 		const publications = await Publication.find()
 			.where({ idUser: data._id })
+			.where({ state: 'S' })
 			.sort({ createAt: -1 })
-			.populate('idUser');
+			.populate('idUser')
+			.limit(5);
 		publicationsList.push(...publications);
 	}
 	//const publicationsList2 = [];
 	for await (const data of friendsList) {
 		const publications2 = await Publication.find()
 			.where({ idUser: data._id })
+			.where({ state: 'S' })
 			.sort({ createAt: -1 })
 			.populate('idUser')
-			.limit(10);
+			.limit(5);
 		publicationsList.push(...publications2);
 	}
 
@@ -76,6 +77,7 @@ async function getPublicationsFollersFriends(ctx) {
 	const Mypublications = await Publication.find()
 		.where({ idUser: ctx.usuarioActual.id })
 		.sort({ createAt: -1 })
+		.where({ state: 'S' })
 		.populate('idUser')
 		.limit(5);
 
@@ -86,9 +88,19 @@ async function getPublicationsFollersFriends(ctx) {
 	});
 	return result;
 }
+async function deletePublish(id, ctx) {
+	try {
+		await Publication.findByIdAndUpdate(id, { state: 'N' }).where({ idUser: ctx.usuarioActual.id });
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
 
 module.exports = {
 	publish,
 	getPublications,
-	getPublicationsFollersFriends
+	getPublicationsFollersFriends,
+	deletePublish
 };

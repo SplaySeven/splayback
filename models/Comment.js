@@ -20,6 +20,10 @@ const CommentSchema = Schema({
 	createAt: {
 		type: Date,
 		default: Date.now()
+	},
+	state: {
+		type: String,
+		default: 'A'
 	}
 });
 
