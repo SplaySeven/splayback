@@ -142,6 +142,7 @@ const typeDefs = gql`
 		unFriend(id: ID!): Boolean
 		#Publication
 		publish(file: Upload, comments: String): Publish
+		publishMovil(file: Upload, comments: String): Publish
 		deletePublish(id: ID!): Boolean
 		#Comment
 		addComment(input: commentInput): Comment
