@@ -3,6 +3,7 @@ const Follow = require('../models/Follow');
 const Friend = require('../models/Friend');
 const awsUploadImage = require('../utils/aws-upload-image');
 const { v4: uuidv4 } = require('uuid');
+
 async function publish(file, comments, ctx) {
 	const { id } = ctx.usuarioActual;
 	const { createReadStream, mimetype } = await file;
@@ -21,6 +22,30 @@ async function publish(file, comments, ctx) {
 			comments: comments
 		});
 		publication.save();
+		return {
+			status: true,
+			urlFile: result
+		};
+	} catch (error) {
+		return {
+			status: null,
+			urlFile: ''
+		};
+	}
+}
+async function publishMovil(file, comments, ctx) {
+	const { id } = ctx.usuarioActual;
+	const { amazon, type } = await file;
+
+	try {
+		const publicationMovil = new Publication({
+			idUser: id,
+			file: amazon,
+			typeFile: type.split('/')[0],
+			createAt: Date.now(),
+			comments: comments
+		});
+		publicationMovil.save();
 		return {
 			status: true,
 			urlFile: result
@@ -100,6 +125,7 @@ async function deletePublish(id, ctx) {
 
 module.exports = {
 	publish,
+	publishMovil,
 	getPublications,
 	getPublicationsFollersFriends,
 	deletePublish
