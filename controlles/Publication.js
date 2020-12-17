@@ -33,6 +33,7 @@ async function publish(file, comments, ctx) {
 		};
 	}
 }
+//Estre proceso es para ejecutarlo en moviles
 async function publishMovil(file, comments, ctx) {
 	const { id } = ctx.usuarioActual;
 	const { amazon, type } = await file;

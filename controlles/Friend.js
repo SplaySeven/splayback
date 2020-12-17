@@ -40,16 +40,16 @@ async function unFriend(id, ctx) {
 //Funcion para ver todos mis amigos
 async function getFriends(id) {
 	const user = await User.findById(id);
-	const friends = await Friend.find({ friend: user._id }).populate('idUser');
+	const friends = await Friend.find({ idUser: id }).populate('friend');
 	const friendsList = [];
 	for await (const data of friends) {
-		friendsList.push(data.idUser);
+		friendsList.push(data.friend);
 	}
 	return friendsList;
 }
 
 async function getNotFriends(ctx) {
-	const users = await User.find().where({ type: 'P' }).limit(10);
+	const users = await User.find().where({ type: 'P' }).limit(200);
 	const arrayUsers = [];
 	for await (const user of users) {
 		const isFind = await Friend.findOne({ idUser: ctx.usuarioActual.id }).where('friend').equals(user._id);
