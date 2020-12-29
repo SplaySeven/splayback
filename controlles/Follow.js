@@ -4,6 +4,8 @@ const User = require('../models/User');
 
 async function follow(id, ctx) {
 	//Guardar el usuario logeao y al que sigo
+	console.log(id);
+	console.log(ctx);
 
 	const userFound = await User.findById(id);
 	if (!userFound) throw new Error('Usuario no encontrado');
@@ -21,6 +23,7 @@ async function follow(id, ctx) {
 }
 async function isFollow(id, ctx) {
 	//Saber si sigo a un usuario
+	console.log(id);
 	const userFound = await User.findById(id);
 	if (!userFound) throw new Error('Usuario no encontado');
 	const follow = await Follow.find({ idUser: ctx.usuarioActual.id }).where('follow').equals(userFound._id);

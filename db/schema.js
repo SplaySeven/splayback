@@ -41,6 +41,20 @@ const typeDefs = gql`
 		urlPicture: String
 	}
 
+	type UpdateUser {
+		status: Boolean
+		avatar: String
+		name: String
+		lastname: String
+		email: String
+		birthdayDay: String
+		birthdayMonth: String
+		birthdayYear: String
+		gender: String
+		type: String
+		phone: String
+	}
+
 	type Publish {
 		status: Boolean
 		urlFile: String
@@ -89,6 +103,7 @@ const typeDefs = gql`
 		type: String
 		uidFirebase: String
 		connected: String
+		avatar: String
 	}
 
 	input authenticateInput {
@@ -134,6 +149,7 @@ const typeDefs = gql`
 		deleteAvatar: Boolean
 		updatePicture(file: Upload): UpdatePicture
 		deletePicture: Boolean
+		updateUser(file: Upload): UpdateUser
 		#Follow
 		follow(id: ID!): Boolean
 		unFollow(id: ID!): Boolean

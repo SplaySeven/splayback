@@ -9,6 +9,7 @@ const awsUploadImage = require('../utils/aws-upload-image');
 
 async function isUserFirebase(uidFirebase) {
 	//Saber si ya fue ingresado desde firebase
+
 	const userFound = await User.findOne({ uidFirebase });
 	if (!userFound) {
 		return false;
@@ -48,7 +49,9 @@ const crearToken = (user, secreta, expiresIn) => {
 
 async function authenticateUser(input) {
 	//Si el usuario existe
+
 	const { uidFirebase, password } = input;
+
 	const existeUsuario = await User.findOne({ uidFirebase });
 	if (!existeUsuario) {
 		throw new Error('El Usuario no existe');
@@ -74,9 +77,44 @@ async function connectedUser(connected, ctx) {
 		return false;
 	}
 }
+
 async function getUserConnect(connected) {
 	const users = await User.find({ connected });
 	return users;
+}
+async function updateUser(file, ctx) {
+	const { id } = ctx.usuarioActual;
+	const { avatar, name, lastname, email, birthdayDay, birthdayMonth, birthdayYear, gender, type, phone } = file;
+
+	try {
+		await User.findByIdAndUpdate(id, {
+			name: name,
+			lastname: lastname,
+			avatar: avatar,
+			email: email,
+			birthdayDay: birthdayDay,
+			birthdayMonth: birthdayMonth,
+			birthdayYear: birthdayYear,
+			gender: gender,
+			type: type,
+			phone: phone
+		});
+		return {
+			status: true,
+			name: name,
+			lastname: lastname,
+			avatar: avatar,
+			email: email,
+			birthdayDay: birthdayDay,
+			birthdayMonth: birthdayMonth,
+			birthdayYear: birthdayYear,
+			gender: gender,
+			type: type,
+			phone: phone
+		};
+	} catch (error) {
+		status: false;
+	}
 }
 async function updateAvatar(file, ctx) {
 	const { id } = ctx.usuarioActual;
@@ -167,5 +205,6 @@ module.exports = {
 	deletePicture,
 	isUserFirebase,
 	connectedUser,
-	getUserConnect
+	getUserConnect,
+	updateUser
 };

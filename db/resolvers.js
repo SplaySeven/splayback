@@ -37,6 +37,7 @@ const resolvers = {
 		deleteAvatar: (_, {}, ctx) => userController.deleteAvatar(ctx),
 		updatePicture: (_, { file }, ctx) => userController.updatePicture(file, ctx),
 		deletePicture: (_, {}, ctx) => userController.deletePicture(ctx),
+		updateUser: (_, { file }, ctx) => userController.updateUser(file, ctx),
 		//Follow
 		follow: (_, { id }, ctx) => followController.follow(id, ctx),
 		unFollow: (_, { id }, ctx) => followController.unFollow(id, ctx),
