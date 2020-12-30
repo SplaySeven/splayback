@@ -45,7 +45,8 @@ async function getFriends(id) {
 	for await (const data of friends) {
 		friendsList.push(data.friend);
 	}
-	return friendsList.sort({ name: 1 });
+
+	return friendsList;
 }
 //Funcion para ver los amigos que nos siguen
 async function getFriendrs(id) {
@@ -59,7 +60,7 @@ async function getFriendrs(id) {
 }
 
 async function getNotFriends(ctx) {
-	const users = await User.find().where({ type: 'P' }).sort({ name: -1 });
+	const users = await User.find().where({ type: 'P' });
 	const arrayUsers = [];
 	for await (const user of users) {
 		const isFind = await Friend.findOne({ idUser: ctx.usuarioActual.id }).where('friend').equals(user._id);
