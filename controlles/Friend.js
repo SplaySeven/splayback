@@ -45,11 +45,21 @@ async function getFriends(id) {
 	for await (const data of friends) {
 		friendsList.push(data.friend);
 	}
+	return friendsList.sort({ name: 1 });
+}
+//Funcion para ver los amigos que nos siguen
+async function getFriendrs(id) {
+	const user = await User.findById(id);
+	const friends = await Friend.find({ friend: id }).populate('idUser');
+	const friendsList = [];
+	for await (const data of friends) {
+		friendsList.push(data);
+	}
 	return friendsList;
 }
 
 async function getNotFriends(ctx) {
-	const users = await User.find().where({ type: 'P' }).limit(200);
+	const users = await User.find().where({ type: 'P' }).sort({ name: -1 });
 	const arrayUsers = [];
 	for await (const user of users) {
 		const isFind = await Friend.findOne({ idUser: ctx.usuarioActual.id }).where('friend').equals(user._id);
@@ -67,5 +77,6 @@ module.exports = {
 	isFriend,
 	unFriend,
 	getFriends,
+	getFriendrs,
 	getNotFriends
 };

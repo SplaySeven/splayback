@@ -31,7 +31,7 @@ async function isLike(idPublication, ctx) {
 		const result = await Like.findOne({ idPublication }).where({
 			idUser: ctx.usuarioActual.id
 		});
-		if (!result) throw new Error('Like no encontrado');
+		//if (!result) throw new Error('Like no encontrado');
 	} catch (error) {
 		console.log(error);
 		return false;

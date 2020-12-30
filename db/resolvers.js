@@ -17,7 +17,10 @@ const resolvers = {
 		//friend
 		isFriend: (_, { id }, ctx) => friendController.isFriend(id, ctx),
 		getFriends: (_, { id }) => friendController.getFriends(id),
+		getFriendrs: (_, { id }) => friendController.getFriendrs(id),
+
 		getNotFriends: (_, {}, ctx) => friendController.getNotFriends(ctx),
+
 		//Publication
 		getPublications: (_, { id }) => publicationController.getPublications(id),
 		getPublicationsFollersFriends: (_, {}, ctx) => publicationController.getPublicationsFollersFriends(ctx),

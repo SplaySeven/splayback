@@ -128,6 +128,7 @@ const typeDefs = gql`
 		#Friend
 		isFriend(id: ID!): Boolean
 		getFriends(id: ID!): [User]
+		getFriendrs(id: ID!): [User]
 		getNotFriends: [User]
 		#Publication
 		getPublications(id: ID!): [Publication]
